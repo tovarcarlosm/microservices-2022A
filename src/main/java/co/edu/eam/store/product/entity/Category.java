@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Table(name = "category")
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class Category {
+    // TODO: completar categoria con los ENDPOINTS
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;

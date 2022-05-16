@@ -46,7 +46,36 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> registrar(@RequestBody Product product){
+        // TODO: completar con validaciones de los estudiantes
         Product createdProduct = productService.createProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Product> actualizar(@PathVariable("id") Long id, @RequestBody Product product){
+        product.setId(id);
+        Product updatedProduct = productService.updateProduct(product);
+        if(updatedProduct == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedProduct);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Product> eliminar(@PathVariable("id") Long id){
+        Product deletedProduct = productService.deleteProduct(id);
+        if(deletedProduct == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(deletedProduct);
+    }
+
+    @GetMapping(value = "/{id}/stock")
+    public ResponseEntity<Product> actualizarStock(@PathVariable("id") Long id, @RequestParam(name = "quantity", required = true) Double quantity){
+        Product product = productService.updateStock(id, quantity);
+        if(product == null){
+            return  ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(product);
     }
 }
